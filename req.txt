@@ -1,6 +1,6 @@
 faiss-cpu
 groq
-langchain-groq
+langchain_groq
 PyPDF2
 langchain_google_genai
 langchain

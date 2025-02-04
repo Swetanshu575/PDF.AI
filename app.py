@@ -33,15 +33,52 @@ Questions:{input}
 """
 )
 def vector_embedding():
-
     if "vectors" not in st.session_state:
+        # Load embedding model
+        embedding_model = GoogleGenerativeAIEmbeddings(model="models/embedding-001")
 
-        st.session_state.embeddings=GoogleGenerativeAIEmbeddings(model = "models/embedding-001")
-        st.session_state.loader=PyPDFDirectoryLoader(".\pdf") ## Data Ingestion
-        st.session_state.docs=st.session_state.loader.load() ## Document Loading
-        st.session_state.text_splitter=RecursiveCharacterTextSplitter(chunk_size=1000,chunk_overlap=200) ## Chunk Creation
-        st.session_state.final_documents=st.session_state.text_splitter.split_documents(st.session_state.docs[:20]) #splitting
-        st.session_state.vectors=FAISS.from_documents(st.session_state.final_documents,st.session_state.embeddings) #vector OpenAI embeddings
+        # Load PDFs
+        st.session_state.loader = PyPDFDirectoryLoader("./pdf")  # Ensure correct path
+        st.session_state.docs = st.session_state.loader.load()  # Document Loading
+
+        # Debugging: Print loaded documents
+        st.write(f"Loaded {len(st.session_state.docs)} documents")
+
+        # Check if documents were loaded
+        if not st.session_state.docs:
+            st.error("❌ No documents found! Please upload PDFs.")
+            return
+
+        # Text splitting
+        st.session_state.text_splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
+        st.session_state.final_documents = st.session_state.text_splitter.split_documents(st.session_state.docs[:20])
+
+        # Debugging: Print split document count
+        st.write(f"Split into {len(st.session_state.final_documents)} chunks")
+
+        # Check if text splitting worked
+        if not st.session_state.final_documents:
+            st.error("❌ Text splitting failed. Check document format.")
+            return
+
+        # Generate embeddings for each document
+        st.session_state.embeddings = [embedding_model.embed_query(doc.page_content) for doc in st.session_state.final_documents]
+
+        # Debugging: Print embedding size
+        st.write(f"Generated {len(st.session_state.embeddings)} embeddings")
+
+        # Check if embeddings were generated
+        if not st.session_state.embeddings or len(st.session_state.embeddings) == 0:
+            st.error("❌ Embeddings are empty. Check embedding model.")
+            return
+
+        # Create FAISS vector store
+        st.session_state.vectors = FAISS.from_texts(
+            [doc.page_content for doc in st.session_state.final_documents], embedding_model
+        )
+
+        st.write("✅ Vector Store DB is Ready!")
+
 
 
 

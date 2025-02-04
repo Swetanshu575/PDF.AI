@@ -20,7 +20,7 @@ os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
 st.title("Clinisio🤖🤖")
 
 llm=ChatGroq(groq_api_key=groq_api_key,
-             model_name="Llama3-8b-8192")
+             model_name="Deepseek-R1-Distill-Llama-70b")
 prompt=ChatPromptTemplate.from_template(
 """
 Answer the questions based on the provided context only.

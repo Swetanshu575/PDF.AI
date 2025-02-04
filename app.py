@@ -20,9 +20,10 @@ os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
 st.title("Clinisio🤖🤖")
 
 llm=ChatGroq(groq_api_key=groq_api_key,
-             model_name="Deepseek-R1-Distill-Llama-70b")
+             model_name="Llama3-70b-8192")
 prompt=ChatPromptTemplate.from_template(
 """
+Answer the question based on the provided context and add some health tips too.
 Answer the questions based on the provided context only.
 Please provide the most accurate response based on the question
 <context>

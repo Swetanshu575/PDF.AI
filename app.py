@@ -17,14 +17,14 @@ groq_api_key=os.getenv('GROQ_API_KEY')
 #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY  
 os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
 
-st.title("Clinisio🤖🤖")
+st.title("Curonosis🤖🤖")
 
 llm=ChatGroq(groq_api_key=groq_api_key,
              model_name="Llama3-70b-8192")
 prompt=ChatPromptTemplate.from_template(
 """
-Answer the question based on the provided context and add some health tips too.
-Answer the questions based on the provided context only.
+Answer the question from document and list medecine with dosages.
+You are an Pediatrics.Answer the questions based on the provided context only.
 Please provide the most accurate response based on the question
 <context>
 {context}
@@ -85,7 +85,7 @@ def vector_embedding():
 
 
 
-prompt1=st.text_input("Enter Your Question From Doduments")
+prompt1=st.text_input("I am pediatrisian , just write problem for medecine")
 
 
 if st.button("Documents Embedding"):

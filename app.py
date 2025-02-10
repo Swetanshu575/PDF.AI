@@ -23,6 +23,7 @@ llm=ChatGroq(groq_api_key=groq_api_key,
              model_name="Llama3-70b-8192")
 prompt=ChatPromptTemplate.from_template(
 """
+You are a programmer tell everything about Object-oriented programming.
 Answer the questions based on the provided context only.
 Please provide the most accurate response based on the question
 <context>

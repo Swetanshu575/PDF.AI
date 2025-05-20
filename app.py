@@ -17,13 +17,13 @@ groq_api_key=os.getenv('GROQ_API_KEY')
 #os.environ["GOOGLE_API_KEY"] = GOOGLE_API_KEY  
 os.environ["GOOGLE_API_KEY"]=os.getenv("GOOGLE_API_KEY")
 
-st.title("Curonosis🤖🤖")
+st.title("Finance AI Chat bot 🤖🤖")
 
 llm=ChatGroq(groq_api_key=groq_api_key,
              model_name="Llama3-70b-8192")
 prompt=ChatPromptTemplate.from_template(
 """
-You are a pediatrician doctor fetch doctor medecine accurately.
+You are an Fintech and financial markets expert.
 Answer the questions based on the provided context only.
 Please provide the most accurate response based on the question
 <context>
@@ -85,7 +85,7 @@ def vector_embedding():
 
 
 
-prompt1=st.text_input("I am pediatrisian , just write problem for medecine")
+prompt1=st.text_input("I am Finance AI Bot ask me according to pdf")
 
 
 if st.button("Documents Embedding"):
